@@ -1,0 +1,9 @@
+form {
+	position: fixed; top: 40%; left: 40%;
+}
+
+body {
+	background-color: Lavender;
+	font: 18px Verdana;
+	font-size: large;
+}

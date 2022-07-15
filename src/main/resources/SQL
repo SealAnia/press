@@ -1,0 +1,53 @@
+CREATE SCHEMA `press_articles` ;
+
+CREATE TABLE `press_articles`.`article` (
+  `articleid` INT NOT NULL AUTO_INCREMENT,
+  `contentsid` INT NOT NULL,
+  `date_of_publication` DATE NOT NULL,
+  `magazineid` INT NOT NULL,
+  `authorid` INT NOT NULL,
+  PRIMARY KEY (`articleid`),
+  UNIQUE INDEX `articleid_UNIQUE` (`articleid` ASC) VISIBLE,
+  UNIQUE INDEX `contentsid_UNIQUE` (`contentsid` ASC) VISIBLE);
+  
+  CREATE TABLE `press_articles`.`contents` (
+  `contentsid` INT NOT NULL AUTO_INCREMENT,
+  `publication_name` VARCHAR(100) NOT NULL,
+  `content` LONGTEXT NOT NULL,
+  PRIMARY KEY (`contentsid`),
+  UNIQUE INDEX `contentsid_UNIQUE` (`contentsid` ASC) VISIBLE);
+  
+  CREATE TABLE `press_articles`.`author` (
+  `authorid` INT NOT NULL AUTO_INCREMENT,
+  `name` VARCHAR(45) NOT NULL,
+  `surname` VARCHAR(45) NOT NULL,
+  PRIMARY KEY (`authorid`),
+  UNIQUE INDEX `authorid_UNIQUE` (`authorid` ASC) VISIBLE);
+  
+  CREATE TABLE `press_articles`.`magazine` (
+  `magazineid` INT NOT NULL AUTO_INCREMENT,
+  `name` VARCHAR(45) NULL,
+  PRIMARY KEY (`magazineid`),
+  UNIQUE INDEX `magazineid_UNIQUE` (`magazineid` ASC) VISIBLE);
+  
+  ALTER TABLE `press_articles`.`article` 
+ADD INDEX `author_FK_idx` (`authorid` ASC) VISIBLE,
+ADD INDEX `magazine_FK_idx` (`magazineid` ASC) VISIBLE;
+;
+ALTER TABLE `press_articles`.`article` 
+ADD CONSTRAINT `content_FK`
+  FOREIGN KEY (`contentsid`)
+  REFERENCES `press_articles`.`contents` (`contentsid`)
+  ON DELETE NO ACTION
+  ON UPDATE NO ACTION,
+ADD CONSTRAINT `author_FK`
+  FOREIGN KEY (`authorid`)
+  REFERENCES `press_articles`.`author` (`authorid`)
+  ON DELETE NO ACTION
+  ON UPDATE NO ACTION,
+ADD CONSTRAINT `magazine_FK`
+  FOREIGN KEY (`magazineid`)
+  
+  ALTER TABLE `press_articles`.`article` 
+ADD COLUMN `date_of_edition` DATE NULL AFTER `authorid`,
+ADD COLUMN `time_of_edition` TIME NULL AFTER `date_of_edition`;
